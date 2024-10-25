@@ -1,70 +1,187 @@
-# Getting Started with Create React App
+# Chrome History RAG System 🚀
+![Screenshot from 2024-10-25 10-25-51](https://github.com/user-attachments/assets/12d7122b-1619-4622-a3bc-8cdfac604c0f)
+A powerful Retrieval-Augmented Generation (RAG) system that integrates your Chrome browsing history with OpenAI's GPT models for intelligent, context-aware search and query responses.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 🌟 Features
 
-## Available Scripts
+- Chrome browsing history extraction and processing
+- Automatic metadata scraping (titles and descriptions) from visited websites
+- Embedding generation using OpenAI's text-embedding-ada-002 model
+- Fast similarity search powered by FAISS indexing
+- Intelligent response generation using GPT-4
+- Modern React-based user interface with Tailwind CSS
+- Dual-mode operation: RAG-based search and direct OpenAI queries
 
-In the project directory, you can run:
+## 🏗️ System Architecture
 
-### `npm start`
+```
+1. Database Creation (database_creation.py)
+   └── Extract Chrome history → Store in SQLite
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. Data Enrichment (scrape_data.py)
+   └── Fetch metadata → Update database
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. Index Creation (index_creation.py)
+   └── Generate embeddings → Build FAISS index
 
-### `npm test`
+4. RAG System (rag_system.py)
+   └── Query processing → Response generation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5. Frontend (App.js)
+   └── React-based user interface
+```
 
-### `npm run build`
+## 🚀 Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Python 3.8+
+- Node.js 14+
+- Google Chrome browser
+- OpenAI API key
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installation
 
-### `npm run eject`
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/chrome-history-rag.git
+cd chrome-history-rag
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Install backend dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Set up the frontend:
+```bash
+cd frontend
+npm install @headlessui/react @heroicons/react @tailwindcss/forms autoprefixer postcss tailwindcss
+npx tailwindcss init -p
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Configure OpenAI API:
+```json
+{
+    "openai_api_key": "your-api-key-here"
+}
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Configuration Files
 
-## Learn More
+1. Update `tailwind.config.js`:
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [require('@tailwindcss/forms')],
+}
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Update `src/index.css`:
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 💻 Running the System
 
-### Code Splitting
+### Backend Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Initialize the database:
+```bash
+python database_creation.py
+python scrape_data.py
+python index_creation.py
+```
 
-### Analyzing the Bundle Size
+2. Start the backend server:
+```bash
+python main.py
+# For development mode:
+uvicorn main:app --reload --port 8000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Frontend Setup
 
-### Making a Progressive Web App
+1. Start the development server:
+```bash
+cd rag-interface
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. Access the application at `http://localhost:3000`
 
-### Advanced Configuration
+## 📁 Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+chrome-history-rag/
+├── backend/
+│   ├── config.json
+│   ├── database_creation.py
+│   ├── scrape_data.py
+│   ├── index_creation.py
+│   ├── rag_system.py
+│   └── main.py
+├── rag-interface/
+│   ├── public/
+│   └── src/
+│       ├── App.js
+│       ├── index.js
+│       └── index.css
+├── requirements.txt
+└── README.md
+```
 
-### Deployment
+## ⚙️ Technical Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Backend**
+  - Database: SQLite3
+  - Embeddings: OpenAI text-embedding-ada-002
+  - Vector Search: Facebook AI Similarity Search (FAISS)
+  - API Framework: FastAPI
+  - Language Model: GPT-4
 
-### `npm run build` fails to minify
+- **Frontend**
+  - Framework: React
+  - Styling: Tailwind CSS
+  - UI Components: Headless UI
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🔧 Troubleshooting
+
+### Common Issues
+
+1. **CORS Issues**
+   - Verify backend CORS configuration matches frontend URL
+   - Confirm frontend is using correct backend URL
+
+2. **Database Access**
+   - Close Chrome before accessing history database
+   - Verify Chrome history file path
+
+3. **OpenAI API**
+   - Confirm API key is properly configured
+   - Monitor API quota and rate limits
+
+4. **FAISS Index**
+   - Ensure sufficient memory for index creation
+   - Verify index file location
+
+### Configuration Parameters
+
+- `DEFAULT_CHROME_PATH`: Chrome history database location
+- `request_delay`: Metadata scraping request delay
+- `batch_size`: Embedding generation batch size
+- `max_urls`: URL processing limit
+
+## 🤝 Contributing
+
+Contributions are welcome! Please submit pull requests for any improvements.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
